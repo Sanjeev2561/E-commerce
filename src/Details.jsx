@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { addToCart } from "./slice/cartslice";
 
 function ProductDetail() {
   const navigate = useNavigate();
@@ -9,6 +11,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState("");
 
+  const dispatch=useDispatch()
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -132,7 +135,7 @@ function ProductDetail() {
 
             {/* Cart Buttons */}
             <div className="flex flex-wrap gap-14 mt-8 px-13">
-              <button className="rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 px-7 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:from-cyan-400 hover:to-blue-500">
+              <button onClick={()=>dispatch(addToCart(data))} className="rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 px-7 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:from-cyan-400 hover:to-blue-500">
                 ➕Add to Cart
               </button>
 
