@@ -1,4 +1,5 @@
 import "./Footer.css";
+import { FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -10,7 +11,10 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© 2026 Sanjeev Kumar | All Rights Reserved</p>
+        <p>© 2026 Sanjeev Kumar | All Rights Reserved
+           <span className="bg-red-600 text-pink-500"><FaInstagram /></span>
+        </p>
+       
       </div>
     </footer>
   );

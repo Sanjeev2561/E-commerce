@@ -15,10 +15,11 @@ const Shop = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://dummyjson.com/products?limit=194&skip=0"
+          "https://dummyjson.com/products"
         );
 
         const result = await response.json();
+        console.log(result)
 
         setData(result.products);
       } catch (error) {

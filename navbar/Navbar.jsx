@@ -22,6 +22,10 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const cartcount=JSON.parse(localStorage.getItem("cart"))
+  console.log("udygd",cartcount)
+const total=cartcount.length
+console.log("th",total)
   const navLinkClass =
     "rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition duration-300 hover:bg-white/10 hover:text-cyan-300";
 
@@ -57,8 +61,9 @@ const Navbar = () => {
           </li>
 
           <li>
-            <Link to="/Cart" className={navLinkClass}>
+            <Link to="/Cart" className={`${navLinkClass} relative`}>
               🛒Cart
+              <span className="absolute bg-red-500 rounded-2xl w-3 text-center top-0">{total}</span>
             </Link>
           </li>
         </ul>

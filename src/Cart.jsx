@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, removeFromCart } from "./slice/cartslice";
+import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from "./slice/cartslice";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
+  console.log("duyg",cartItems)
+  
   const dispatch = useDispatch();
 
-  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+const total = cartItems.reduce(
+  (sum, item) => sum + item.price * item.quantity,
+  0
+);
+const round=Math.floor(total)
 
   if (cartItems.length === 0) {
     return (
@@ -83,13 +89,57 @@ const Cart = () => {
                   {item.description}
                 </p>
 
-                <button
+                {/* <button
                   type="button"
                   onClick={() => dispatch(removeFromCart(item.id))}
                   className="mt-4 text-sm font-semibold text-red-300 transition hover:text-red-100 hover:underline"
                 >
                   Remove item
                 </button>
+                  <button
+                  type="button"
+                  onClick={() => dispatch(increaseQuantity(item.id))}
+                  className="mt-4 text-sm font-semibold text-red-300 transition hover:text-red-100 hover:underline"
+                >
+                 +
+                </button>
+                <span>{}</span>
+                  <button
+                  type="button"
+                  onClick={() => dispatch(decreaseQuantity(item.id))}
+                  className="mt-4 text-sm font-semibold text-red-300 transition hover:text-red-100 hover:underline"
+                >
+                  -
+                </button> */}
+                <div className="mt-4 flex items-center gap-4">
+  <button
+    type="button"
+    onClick={() => dispatch(removeFromCart(item.id))}
+    className="text-sm font-semibold text-red-300 hover:text-red-100 hover:underline"
+  >
+    Remove
+  </button>
+
+  <button
+    type="button"
+    onClick={() => dispatch(decreaseQuantity(item.id))}
+    className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500 text-lg font-bold"
+  >
+    -
+  </button>
+
+  <span className="text-lg font-bold">
+    {item.quantity}
+  </span>
+
+  <button
+    type="button"
+    onClick={() => dispatch(increaseQuantity(item.id))}
+    className="flex h-8 w-8 items-center justify-center rounded-md bg-green-500 text-lg font-bold"
+  >
+    +
+  </button>
+</div>
               </div>
 
               <div className="border-t border-white/10 pt-4 text-left sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0 sm:text-right">
@@ -98,8 +148,12 @@ const Cart = () => {
                 </p>
 
                 <p className="mt-1 text-2xl font-bold text-emerald-400">
-                  ₹{item.price}
-                </p>
+  ₹{item.price * item.quantity}
+</p>
+
+<p className="text-sm text-slate-400">
+  ₹{item.price} × {item.quantity}
+</p>
               </div>
             </div>
           ))}
@@ -108,13 +162,13 @@ const Cart = () => {
         <div className="mt-8 rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl">
           <div className="flex items-center justify-between border-b border-white/10 pb-5">
             <span className="text-lg text-slate-300">Subtotal</span>
-            <span className="text-xl font-bold text-white">₹{total}</span>
+            <span className="text-xl font-bold text-white">₹{round}</span>
           </div>
 
           <div className="flex items-center justify-between py-5">
             <h2 className="text-2xl font-bold">Total</h2>
             <p className="bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-3xl font-bold text-transparent">
-              ₹{total}
+              ₹{round}
             </p>
           </div>
 

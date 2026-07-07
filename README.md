@@ -32,7 +32,7 @@ A modern responsive e-commerce frontend project built with React, Redux Toolkit,
 - Tailwind CSS
 - JavaScript
 - Local Storage
-- Custom JSON Product Data
+- Dummy JSON Product Data
 
 ## 📁 Project Structure
 
