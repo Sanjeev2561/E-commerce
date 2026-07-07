@@ -57,8 +57,8 @@ const Navbar = () => {
           </li>
 
           <li>
-            <Link to="/counter" className={navLinkClass}>
-              Counter
+            <Link to="/Cart" className={navLinkClass}>
+              🛒Cart
             </Link>
           </li>
         </ul>

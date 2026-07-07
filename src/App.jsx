@@ -1,13 +1,14 @@
 import "./App.css";
 import Home from "./Home";
 import Shop from "./Shop";
-import Services from "./Counter";
+import Services from "./Cart";
 import Login from "./Login";
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Counter from "./Counter";
+// import Counter from "./Counter";
 import ProductDetail from "./Details";
+import Cart from "./Cart";
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home/>} />
             <Route path="/Shop" element={<Shop />} />
-            <Route path="/Counter" element={<Counter />} />
+            <Route path="/Cart" element={<Cart />} />
             <Route path="/Login" element={<Login/>} />
             <Route path="/detail/:id" element={<ProductDetail />} />
           </Routes>

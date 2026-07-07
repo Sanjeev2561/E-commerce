@@ -1,16 +1,53 @@
-# React + Vite
+# 🛍️ Sanjeev Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern responsive e-commerce frontend project built with React, Redux Toolkit, React Router, Tailwind CSS, and a custom product JSON file.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Modern glassmorphism and gradient UI
+- Responsive design for mobile, tablet, and desktop
+- Product listing page
+- Search products by name, brand, description, or category
+- Category-wise product filtering
+- Load More products button
+- Product detail pages
+- Add products to cart using Redux Toolkit
+- Cart item quantity management
+- Remove individual cart products
+- Clear complete cart
+- Cart total calculation
+- Cart item count in navbar
+- User signup and login using Local Storage
+- User profile dropdown in navbar
+- Logout functionality
+- Home category links connected with Shop categories
 
-## React Compiler
+## 🛠️ Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- Vite
+- React Router DOM
+- Redux Toolkit
+- React Redux
+- Tailwind CSS
+- JavaScript
+- Local Storage
+- Custom JSON Product Data
 
-## Expanding the ESLint configuration
+## 📁 Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+src
+├── data
+│   └── products.json
+├── slice
+│   └── cartslice.jsx
+├── App.jsx
+├── Home.jsx
+├── Shop.jsx
+├── Counter.jsx
+├── Login.jsx
+├── Navbar.jsx
+├── SearchContext.jsx
+├── store.jsx
+└── main.jsx
