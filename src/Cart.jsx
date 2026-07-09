@@ -1,17 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from "./slice/cartslice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
-  console.log("duyg",cartItems)
+  // console.log("duyg",cartItems)
   
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 const total = cartItems.reduce(
   (sum, item) => sum + item.price * item.quantity,
   0
 );
-const round=Math.floor(total)
+const totalPrice = total.toFixed(2);
 
   if (cartItems.length === 0) {
     return (
@@ -148,7 +150,7 @@ const round=Math.floor(total)
                 </p>
 
                 <p className="mt-1 text-2xl font-bold text-emerald-400">
-  ₹{item.price * item.quantity}
+  ₹{(item.price * item.quantity).toFixed(2)}
 </p>
 
 <p className="text-sm text-slate-400">
@@ -162,22 +164,23 @@ const round=Math.floor(total)
         <div className="mt-8 rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl">
           <div className="flex items-center justify-between border-b border-white/10 pb-5">
             <span className="text-lg text-slate-300">Subtotal</span>
-            <span className="text-xl font-bold text-white">₹{round}</span>
+            <span className="text-xl font-bold text-white">₹total.toFixed(2)</span>
           </div>
 
           <div className="flex items-center justify-between py-5">
             <h2 className="text-2xl font-bold">Total</h2>
             <p className="bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-3xl font-bold text-transparent">
-              ₹{round}
+             ₹{totalPrice}
             </p>
           </div>
 
           <button
-            type="button"
-            className="w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 py-3 font-bold text-white shadow-lg shadow-cyan-500/25 transition duration-300 hover:scale-[1.02] hover:from-cyan-400 hover:to-purple-500"
-          >
-            Proceed to Checkout →
-          </button>
+  type="button"
+  onClick={() => navigate("/checkout")}
+  className="w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 py-3 font-bold text-white shadow-lg shadow-cyan-500/25 transition duration-300 hover:scale-[1.02] hover:from-cyan-400 hover:to-purple-500"
+>
+  Proceed to Checkout →
+</button>
         </div>
       </div>
     </div>

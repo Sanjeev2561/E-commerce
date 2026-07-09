@@ -1,10 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { SearchContext } from "./SearchContext";
-
+import { toggleWishlist } from "./slice/wishlistSlice";
 
 const Shop = () => {
   const { search } = useContext(SearchContext);
+
+  const dispatch = useDispatch();
+
+  const wishlistItems = useSelector((state) => state.wishlist.items);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,15 +20,14 @@ const Shop = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://dummyjson.com/products"
+          "https://dummyjson.com/products?limit=100&skip=0"
         );
 
         const result = await response.json();
-        console.log(result)
 
         setData(result.products);
       } catch (error) {
-        console.log(error);
+        console.log("Product loading error:", error);
       } finally {
         setLoading(false);
       }
@@ -50,6 +54,10 @@ const Shop = () => {
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setVisibleProducts(12);
+  };
+
+  const isInWishlist = (productId) => {
+    return wishlistItems.some((item) => item.id === productId);
   };
 
   if (loading) {
@@ -115,81 +123,100 @@ const Shop = () => {
         {filteredProducts.length > 0 ? (
           <>
             <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {displayedProducts.map((item) => (
-                <div
-                  key={item.id}
-                  className="group overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-xl shadow-black/20 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/30 hover:bg-white/15 hover:shadow-2xl"
-                >
-                  <div className="relative h-64 overflow-hidden bg-white">
-                    <Link
-                      to={`/detail/${item.id}`}
-                      className="block h-full w-full"
-                    >
-                      <img
-                        src={item.thumbnail || item.images?.[0]}
-                        alt={item.title}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
-                      />
-                    </Link>
+              {displayedProducts.map((item) => {
+                const savedInWishlist = isInWishlist(item.id);
 
-                    <span className="absolute left-3 top-3 rounded-full bg-slate-950/75 px-3 py-1 text-xs font-semibold text-cyan-200 backdrop-blur-md">
-                      {item.category}
-                    </span>
-
-                    {item.discountPercentage > 0 && (
-                      <span className="absolute right-3 top-3 rounded-full bg-gradient-to-r from-pink-500 to-red-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
-                        -{Math.round(item.discountPercentage)}%
-                      </span>
-                    )}
-
-                    <button
-                      type="button"
-                      className="absolute bottom-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-xl text-pink-500 shadow-lg transition hover:scale-110"
-                    >
-                      ♡
-                    </button>
-                  </div>
-
-                  <div className="p-5">
-                    <p className="truncate text-sm font-semibold text-cyan-300">
-                      {item.brand || "Premium Brand"}
-                    </p>
-
-                    <h2 className="mt-2 truncate text-xl font-bold text-white">
-                      {item.title}
-                    </h2>
-
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="text-sm text-yellow-300">★</span>
-
-                      <span className="text-sm font-medium text-slate-200">
-                        {item.rating}
-                      </span>
-
-                      <span className="text-xs text-slate-400">
-                        ({item.stock} left)
-                      </span>
-                    </div>
-
-                    <div className="mt-5 flex items-end justify-between gap-3">
-                      <div>
-                        <p className="text-xs text-slate-400">Price</p>
-
-                        <p className="text-2xl font-bold text-emerald-400">
-                          ₹{item.price}
-                        </p>
-                      </div>
-
+                return (
+                  <div
+                    key={item.id}
+                    className="group overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-xl shadow-black/20 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/30 hover:bg-white/15 hover:shadow-2xl"
+                  >
+                    <div className="relative h-64 overflow-hidden bg-white">
                       <Link
                         to={`/detail/${item.id}`}
-                        className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-cyan-500/20 transition duration-300 hover:scale-105 hover:from-cyan-400 hover:to-purple-500"
+                        className="block h-full w-full"
                       >
-                        View →
+                        <img
+                          src={item.thumbnail || item.images?.[0]}
+                          alt={item.title}
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+                        />
                       </Link>
+
+                      <span className="absolute left-3 top-3 rounded-full bg-slate-950/75 px-3 py-1 text-xs font-semibold text-cyan-200 backdrop-blur-md">
+                        {item.category}
+                      </span>
+
+                      {item.discountPercentage > 0 && (
+                        <span className="absolute right-3 top-3 rounded-full bg-gradient-to-r from-pink-500 to-red-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                          -{Math.round(item.discountPercentage)}%
+                        </span>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => dispatch(toggleWishlist(item))}
+                        aria-label={
+                          savedInWishlist
+                            ? "Remove from wishlist"
+                            : "Add to wishlist"
+                        }
+                        title={
+                          savedInWishlist
+                            ? "Remove from wishlist"
+                            : "Add to wishlist"
+                        }
+                        className={`absolute bottom-3 right-3 z-10 flex h-11 w-11 items-center justify-center rounded-full text-2xl shadow-lg transition duration-300 hover:scale-110 ${
+                          savedInWishlist
+                            ? "bg-gradient-to-r from-pink-500 to-red-500 text-white shadow-pink-500/40"
+                            : "bg-white/90 text-pink-500 hover:bg-pink-50"
+                        }`}
+                      >
+                        {savedInWishlist ? "♥" : "♡"}
+                      </button>
+                    </div>
+
+                    <div className="p-5">
+                      <p className="truncate text-sm font-semibold text-cyan-300">
+                        {item.brand || "Premium Brand"}
+                      </p>
+
+                      <h2 className="mt-2 truncate text-xl font-bold text-white">
+                        {item.title}
+                      </h2>
+
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="text-sm text-yellow-300">★</span>
+
+                        <span className="text-sm font-medium text-slate-200">
+                          {item.rating}
+                        </span>
+
+                        <span className="text-xs text-slate-400">
+                          ({item.stock} left)
+                        </span>
+                      </div>
+
+                      <div className="mt-5 flex items-end justify-between gap-3">
+                        <div>
+                          <p className="text-xs text-slate-400">Price</p>
+
+                          <p className="text-2xl font-bold text-emerald-400">
+                            ₹{item.price}
+                          </p>
+                        </div>
+
+                        <Link
+                          to={`/detail/${item.id}`}
+                          className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-cyan-500/20 transition duration-300 hover:scale-105 hover:from-cyan-400 hover:to-purple-500"
+                        >
+                          View →
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {visibleProducts < filteredProducts.length && (

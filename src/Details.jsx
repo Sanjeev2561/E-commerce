@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addToCart } from "./slice/cartslice";
+// import { useDispatch } from "react-redux";
+// import { addToCart } from "./slice/cartslice";
+// import { useNavigate } from "react-router-dom";
 
 function ProductDetail() {
   const navigate = useNavigate();
@@ -139,9 +142,15 @@ function ProductDetail() {
                 ➕Add to Cart
               </button>
 
-              <button className="rounded-xl border border-white/20 bg-white/10 px-7 py-3 font-semibold text-white transition hover:bg-white/20 hover:scale-105">
-                🛒Buy Now
-              </button>
+              <button
+  onClick={() => {
+    dispatch(addToCart(data));
+navigate("/checkout");
+  }}
+  className="rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 px-6 py-3 font-bold text-white transition hover:scale-105"
+>
+  Buy Now ⚡
+</button>
             </div>
 
             <div className="flex flex-wrap gap-14 mt-8 pt-6 px-13 border-t border-white/20">
