@@ -67,7 +67,7 @@ const Navbar = () => {
 
           <div>
             <h1 className="bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-300 bg-clip-text text-xl font-bold text-transparent">
-              Sanjeev Store
+              SnapStore
             </h1>
 
             <p className="hidden text-xs text-slate-400 sm:block">
@@ -233,7 +233,13 @@ const Navbar = () => {
                     >
                       🛒 View My Cart ({cartCount})
                     </Link>
-
+                  <Link
+  to="/orders"
+  onClick={() => setShowUserDetails(false)}
+  className="block rounded-xl border border-purple-300/20 bg-purple-500/10 px-4 py-2.5 text-center text-sm font-semibold text-purple-200 transition hover:bg-purple-500/20"
+>
+  📦 My Orders
+</Link>
                     <button
                       type="button"
                       onClick={handleLogout}

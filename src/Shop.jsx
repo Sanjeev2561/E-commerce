@@ -20,7 +20,7 @@ const Shop = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://dummyjson.com/products?limit=100&skip=0"
+          "https://dummyjson.com/products?limit=194&skip=0"
         );
 
         const result = await response.json();

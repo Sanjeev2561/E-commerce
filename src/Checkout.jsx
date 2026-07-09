@@ -126,26 +126,7 @@ const Checkout = () => {
           <p className="mt-3 text-slate-300">Fill in your details below — payment is processed instantly.</p>
         </div>
 
-        {/* Step indicator */}
-        <div className="mx-auto mb-10 flex max-w-md items-center justify-between">
-          {steps.map((step, i) => (
-            <div key={step} className="flex flex-1 items-center">
-              <div className="flex flex-col items-center gap-1.5">
-                <div
-                  className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${
-                    i <= 1 ? "bg-gradient-to-r from-cyan-500 to-blue-600" : "border border-white/20 bg-white/10 text-slate-400"
-                  }`}
-                >
-                  {i < 1 ? "✓" : i + 1}
-                </div>
-                <span className={`text-xs ${i <= 1 ? "text-cyan-300" : "text-slate-500"}`}>{step}</span>
-              </div>
-              {i < steps.length - 1 && (
-                <div className={`mx-2 h-0.5 flex-1 ${i < 1 ? "bg-cyan-500" : "bg-white/10"}`} />
-              )}
-            </div>
-          ))}
-        </div>
+        
 
         <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-[1.4fr_0.8fr]">
           <div className="space-y-7">

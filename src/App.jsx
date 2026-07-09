@@ -12,6 +12,7 @@ import ProductDetail from "./Details";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
 import Success from "./Success";
+import Orders from "./Orders";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Navbar />
         <div className=" main-content">
           <Routes>
+            <Route path="/orders" element={<Orders />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/success" element={<Success />} />
             <Route path="/wishlist" element={<Wishlist />} />
